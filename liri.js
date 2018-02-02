@@ -22,7 +22,7 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
     });
   };
   
-  function whatToShow () {
+  function liriOutputs () {
     let argOne = process.argv[2];
     if (argOne === "my-tweets") {
       myTweets();
@@ -75,7 +75,7 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
     });
   };
  d
-  whatToShow ();
+  liriOutputs ();
 
   function tweetThis () {
     let T = new Twitter(keysLink.twitKeys);
@@ -101,7 +101,7 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
         }
           if (waitForTweet === 1) {
             twitterTweetCount = 1;
-            whatToShow("my-tweets");
+            liriOutputs("my-tweets");
 
             twitterTweetCount = process.argv[3] || 20;
           }
@@ -200,7 +200,7 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
           
           argTwo = textArr[1].trim();
           argTwo = argTwo.replace(/["]+/g, '');
-          whatToShow(textArr[0].trim());
+          liriOutputs(textArr[0].trim());
           argTwo = textArr[3].trim();
           argTwo = argTwo.replace(/["]+/g, '');
           whatToShow(textArr[2].trim());
