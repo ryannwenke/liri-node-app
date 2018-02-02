@@ -1,20 +1,19 @@
-// Dependencies
-var keyLink = require("./keys.js");
+
+var keysLink = require("./keys.js");
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 var request = require("request");
 var moment = require('moment');
 var fs = require("fs");
-// variable definitions
+
 var argTwo = process.argv.slice(3).join(" ");
 var twitterTweetCount = process.argv[3] || 20;
 var tweetText;
-var randTweet = randTweetArray [Math.floor(Math.random()
-  * randTweetArray.length)];
+var randomTweet = randomTweetArray [Math.floor(Math.random()
+  * randomTweetArray.length)];
   var waitForTweet = 0;
 
-  var randTweetArray = ["hello", "this is a test", "lol"];
-  // This function will write items to the log.txt
+  var randomTweetArray = ["hello", "this is a test", "lol"];
   function writeThis (textArg) {
     fs.appendFile('log.txt', textArg, function (err) {
       if (err) {
@@ -22,7 +21,7 @@ var randTweet = randTweetArray [Math.floor(Math.random()
       }
     });
   };
-  // This function determines what you are entering and then performs that task
+  
   function whatToShow () {
     let argOne = process.argv[2];
     if (argOne === "my-tweets") {
@@ -45,13 +44,13 @@ var randTweet = randTweetArray [Math.floor(Math.random()
       console.log("Not a valid command.  Try again.");
     }
   };
-  // This function will show my most recent tweets
+
   function myTweets () {
-    let client = new Twitter(keyLink.twitKeys);
+    let client = new Twitter(keysLink.twitKeys);
     let params = {screen_name: 'ryrycodes', count: twitterTweetCount};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
       if (!error) {
-        // console.log(tweets);
+        
         let tweetData = tweets;
         for (var i = 0; i < tweetData.length; i++) {
           writeThis("\nThis entry was entered: " + moment().format('MMMM Do YYYY, h:mm:ss a') + "\n");
@@ -75,12 +74,12 @@ var randTweet = randTweetArray [Math.floor(Math.random()
       }
     });
   };
-  // Setting up what function should be called
+ d
   whatToShow ();
-  // This section will allow Twitter posts
+
   function tweetThis () {
-    let T = new Twitter(keyLink.twitKeys);
-    let status = argTwo || randTweet
+    let T = new Twitter(keysLink.twitKeys);
+    let status = argTwo || randomTweet
     let tweet = {
       status: (status) }
       T.post('statuses/update', tweet, tweeted)
@@ -109,9 +108,9 @@ var randTweet = randTweetArray [Math.floor(Math.random()
         }
       }
     };
-    // This section will control Spotify Functionality
+    
     function spotifyThis () {
-      let spotify = new Spotify(keyLink.spotty);
+      let spotify = new Spotify(keysLink.spotty);
       spotify.search({ type: 'track', query: (argTwo || "Ace of Base The Sign") }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
@@ -155,7 +154,7 @@ var randTweet = randTweetArray [Math.floor(Math.random()
       request('http://www.omdbapi.com/?apikey=40e9cece&t=' + searchCrit + `&tomatoes=true`, function (error, response, body) {
         let movieObj = JSON.parse(body);
         if (movieObj.Title === undefined && movieObj.Plot === undefined) {
-          console.log("I didn't find that one, please try a different title.");
+          console.log("Try a different title.");
         }
         else {
           writeThis("\nThis entry was entered: " + moment().format('MMMM Do YYYY, h:mm:ss a') + "\n");
@@ -188,7 +187,7 @@ var randTweet = randTweetArray [Math.floor(Math.random()
 
     };
 
-    // This will contain code for the fs read to obtain text from the random.txt file
+    
     function readFromTxt () {
       waitForTweet = 1;
       fs.readFile("random.txt", "utf8", function (err, data) {
@@ -198,14 +197,14 @@ var randTweet = randTweetArray [Math.floor(Math.random()
         else {
           textArr = []
           textArr = data.split(", ");
-          // console.log(textArr);
+          
           argTwo = textArr[1].trim();
           argTwo = argTwo.replace(/["]+/g, '');
           whatToShow(textArr[0].trim());
           argTwo = textArr[3].trim();
           argTwo = argTwo.replace(/["]+/g, '');
           whatToShow(textArr[2].trim());
-          argTwo = randTweet;
+          argTwo = randomTweet;
           whatToShow(textArr[4].trim());
         }
       });
