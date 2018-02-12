@@ -3,17 +3,14 @@ var keysLink = require("./keys.js");
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 var request = require("request");
-var moment = require('moment');
 var fs = require("fs");
+var moment = require("moment-timezone");
 
 var argTwo = process.argv.slice(3).join(" ");
 var twitterTweetCount = process.argv[3] || 20;
 var tweetText;
-var randomTweet = randomTweetArray [Math.floor(Math.random()
-  * randomTweetArray.length)];
-  var waitForTweet = 0;
 
-  var randomTweetArray = ["hello", "this is a test", "lol"];
+var randomTweetArray = ["hello", "this is a test", "lol"];
   function writeThis (textArg) {
     fs.appendFile('log.txt', textArg, function (err) {
       if (err) {
@@ -21,11 +18,19 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
       }
     });
   };
+
+var randomTweet = randomTweetArray [Math.floor(Math.random()
+  * randomTweetArray.length)];
+  var waitForTweet = 0;
+
+  
   
   function liriOutputs () {
+    console.log(process.argv[2]);
     let argOne = process.argv[2];
     if (argOne === "my-tweets") {
-      myTweets();
+     // myTweets();
+      tweetThis();
     }
     else if (argOne === "tweet-this") {
       tweetThis();
@@ -74,15 +79,16 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
       }
     });
   };
- d
+ 
   liriOutputs ();
 
-  function tweetThis () {
+  function tweetThis() {
     let T = new Twitter(keysLink.twitKeys);
-    let status = argTwo || randomTweet
+    let status = "hola I need to go to a Wind Ensemble";//argTwo || randomTweet;
+    console.log(status);
     let tweet = {
       status: (status) }
-      T.post('statuses/update', tweet, tweeted)
+      T.post('statuses/update', tweet, tweeted);
       function tweeted(err, data, response) {
         if(err){
           console.log(err);
@@ -94,11 +100,13 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
           writeThis("\nThis entry was entered: " + moment().format('MMMM Do YYYY, h:mm:ss a') + "\n");
           writeThis("Account name Tweeted From: @scriptscrawler\n Tweet: " + status + "\n");
           if (waitForTweet === 1) {
+            console.log(waitForTweet);
             console.log("");
           }
           else {
           console.log("Review the log.txt file to see a log of your actions");
         }
+         console.log(waitForTweet);
           if (waitForTweet === 1) {
             twitterTweetCount = 1;
             liriOutputs("my-tweets");

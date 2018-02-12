@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/ryannwenke/liri-node-app#readme",
   "dependencies": {
-    "moment": "^2.18.1",
+    "moment-timezone": "^2.20.1",
     "node-spotify-api": "^1.0.7",
     "nodemailer": "^4.0.1",
     "request": "^2.83.0",
