@@ -1,5 +1,5 @@
-
 var keysLink = require("./keys.js");
+var spotifyLink = require("./keys_spotify.js");
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 var request = require("request");
@@ -22,15 +22,13 @@ var randomTweetArray = ["hello", "this is a test", "lol"];
 var randomTweet = randomTweetArray [Math.floor(Math.random()
   * randomTweetArray.length)];
   var waitForTweet = 0;
-
-  
   
   function liriOutputs () {
     console.log(process.argv[2]);
     let argOne = process.argv[2];
     if (argOne === "my-tweets") {
-     // myTweets();
-      tweetThis();
+      myTweets();
+      //tweetThis();
     }
     else if (argOne === "tweet-this") {
       tweetThis();
@@ -51,9 +49,13 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
   };
 
   function myTweets () {
-    let client = new Twitter(keysLink.twitKeys);
+    let client = new Twitter(keysLink.twitterKeys);
+    console.log(keysLink.twitterKeys);
     let params = {screen_name: 'ryrycodes', count: twitterTweetCount};
+  
+
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
+      console.log('inside client.get');
       if (!error) {
         
         let tweetData = tweets;
@@ -82,43 +84,8 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
  
   liriOutputs ();
 
-  function tweetThis() {
-    let T = new Twitter(keysLink.twitKeys);
-    let status = "hola I need to go to a Wind Ensemble";//argTwo || randomTweet;
-    console.log(status);
-    let tweet = {
-      status: (status) }
-      T.post('statuses/update', tweet, tweeted);
-      function tweeted(err, data, response) {
-        if(err){
-          console.log(err);
-          console.log("Something went wrong! Maybe try adding in text for your tweet.");
-        }
-        else{
-          console.log("Your tweet went through!  It has been posted to @scriptscrawler's feed.");
-          console.log("Tweet: " + status);
-          writeThis("\nThis entry was entered: " + moment().format('MMMM Do YYYY, h:mm:ss a') + "\n");
-          writeThis("Account name Tweeted From: @scriptscrawler\n Tweet: " + status + "\n");
-          if (waitForTweet === 1) {
-            console.log(waitForTweet);
-            console.log("");
-          }
-          else {
-          console.log("Review the log.txt file to see a log of your actions");
-        }
-         console.log(waitForTweet);
-          if (waitForTweet === 1) {
-            twitterTweetCount = 1;
-            liriOutputs("my-tweets");
-
-            twitterTweetCount = process.argv[3] || 20;
-          }
-        }
-      }
-    };
-    
     function spotifyThis () {
-      let spotify = new Spotify(keysLink.spotty);
+      var spotify = new Spotify(spotifyLink.spotify);
       spotify.search({ type: 'track', query: (argTwo || "Ace of Base The Sign") }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
@@ -148,7 +115,6 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
             else {
             console.log("Review the log.txt file to see a log of your actions");
           }
-
 
           };
 
@@ -195,7 +161,6 @@ var randomTweet = randomTweetArray [Math.floor(Math.random()
 
     };
 
-    
     function readFromTxt () {
       waitForTweet = 1;
       fs.readFile("random.txt", "utf8", function (err, data) {
